@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: nginx:1.14-alpine
+    depends_on:
+      - php
+    volumes:
+      - .:/var/www/symfony
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/symfony
+
+  db:
+    image: postgres:11.3-alpine
+    environment:
+      POSTGRES_PASSWORD: e9krYS9JRwaeTestDb
+      POSTGRES_USER: symfony
+      POSTGRES_DB: symfony
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - symfonylive-2019-db:/var/lib/postgresql/data
+
+volumes:
+  symfonylive-2019-db:
+    external: true
+

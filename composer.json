@@ -1,0 +1,28 @@
+{
+  "name": "cocoders/symfonylive-warsaw-2019",
+  "description": "Symfony live code from l3l0 presentation",
+  "keywords": [],
+  "homepage": "https://cocoders.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Leszek Prabucki",
+      "email": "leszek.prabucki@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3.6",
+    "psr/log": "~1.0",
+    "ramsey/uuid": "^4.0@dev"
+  },
+  "autoload": {
+    "psr-4": { "SymfonyLiveWarsaw\\": "" },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpspec/phpspec": "^5.1@dev"
+  }
+}
