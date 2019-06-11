@@ -16,9 +16,10 @@
     "ramsey/uuid": "^4.0@dev"
   },
   "autoload": {
-    "psr-4": { "SymfonyLiveWarsaw\\": "" },
+    "psr-4": { "SymfonyLiveWarsaw\\": "src/SymfonyLiveWarsaw/", "App\\": "src/App/" },
     "exclude-from-classmap": [
-      "/Tests/"
+      "/Tests/",
+      "/docker/"
     ]
   },
   "minimum-stability": "dev",
