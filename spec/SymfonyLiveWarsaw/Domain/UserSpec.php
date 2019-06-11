@@ -7,6 +7,7 @@ namespace spec\SymfonyLiveWarsaw\Domain;
 use SymfonyLiveWarsaw\Domain\User;
 use SymfonyLiveWarsaw\Domain\Email;
 use SymfonyLiveWarsaw\Domain\User\PasswordHash;
+use SymfonyLiveWarsaw\Domain\User\Fullname;
 use PhpSpec\ObjectBehavior;
 
 /**
@@ -36,5 +37,13 @@ class UserSpec extends ObjectBehavior
     function it_allows_to_get_id()
     {
         $this->id()->shouldBeLike(User\Id::fromString('35f15ad1-b764-4f22-a655-e2ef3873dfc3'));
+    }
+
+    function it_to_set_full_name()
+    {
+        $this->fullname()->shouldBe(null);
+
+        $this->changeFullname(Fullname::fromFirstAndLastName('Leszek', 'Prabucki'));
+        $this->fullname()->shouldBeLike(Fullname::fromFirstAndLastName('Leszek', 'Prabucki'));
     }
 }
