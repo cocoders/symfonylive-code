@@ -1,7 +1,1 @@
-suites:
-  app_suite:
-    namespace:  App
-    psr4_prefix:  App
-  symfonylive_suite:
-    namespace:  SymfonyLiveWarsaw
-    psr4_prefix:  SymfonyLiveWarsaw
+composer_suite_detection: true
