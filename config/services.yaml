@@ -15,14 +15,34 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        resource: '../src/App'
+        exclude: '../src/App/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller'
+        resource: '../src/App/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    SymfonyLiveWarsaw\:
+        resource: '../src/SymfonyLiveWarsaw'
+        exclude: '../src/SymfonyLiveWarsaw/Domain/{User.php,Email.php}'
+
+    SymfonyLiveWarsaw\Domain\Users: '@App\Doctrine\Users'
+    SymfonyLiveWarsaw\Application\Infrastructure\TransactionManager: '@App\Doctrine\TransactionManager'
+
+    SymfonyLiveWarsaw\Application\Infrastructure\CommandBus:
+        class: SymfonyLiveWarsaw\Application\Infrastructure\SynchronousCommandBus
+
+    SymfonyLiveWarsaw\Application\Infrastructure\LoggerCommandBus:
+        decorates: SymfonyLiveWarsaw\Application\Infrastructure\CommandBus
+        decoration_priority: 1
+        arguments: ['@SymfonyLiveWarsaw\Application\Infrastructure\LoggerCommandBus.inner', '@logger']
+
+    SymfonyLiveWarsaw\Application\Infrastructure\TransactionalCommandBus:
+        decorates: SymfonyLiveWarsaw\Application\Infrastructure\CommandBus
+        decoration_priority: 2
+        arguments: ['@SymfonyLiveWarsaw\Application\Infrastructure\TransactionalCommandBus.inner', '@SymfonyLiveWarsaw\Application\Infrastructure\TransactionManager']

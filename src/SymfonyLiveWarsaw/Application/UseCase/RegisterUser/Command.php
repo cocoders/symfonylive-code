@@ -56,6 +56,8 @@ final class Command implements CommandInterface
         if ($this->firstName && $this->lastName) {
             return Fullname::fromFirstAndLastName($this->firstName, $this->lastName);
         }
+
+        return null;
     }
 
     public function withFullName(string $firstName, string $lastName): Command

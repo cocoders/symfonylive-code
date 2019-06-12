@@ -27,6 +27,8 @@ class RegisterUserSpec extends ObjectBehavior
         UserFactory $userFactory,
         User $user
     ) {
+        $users->has(Email::fromString('leszek.prabucki@gmail.com'))->willReturn(false);
+        $users->add($user)->shouldBeCalled();
         $command = new RegisterUser\Command(
             'a35c7f52-fdf3-40ed-a69e-2c7f17d174e9',
             'leszek.prabucki@gmail.com',
@@ -37,8 +39,6 @@ class RegisterUserSpec extends ObjectBehavior
         $userFactory->create($command)->willReturn($user);
 
         $this->handle($command);
-
-        $users->add($user)->shouldHaveBeenCalled();
     }
 
     function it_cannot_register_user_with_same_email(Users $users)

@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\DependencyInjection\CommandBusCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use SymfonyLiveWarsaw\Application\Infrastructure\CommandHandler;
 
 class Kernel extends BaseKernel
 {
@@ -27,7 +29,7 @@ class Kernel extends BaseKernel
 
     public function getProjectDir(): string
     {
-        return \dirname(__DIR__);
+        return \dirname(__DIR__).'/../';
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
@@ -49,5 +51,16 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    protected function build(ContainerBuilder $container)
+    {
+        $container
+            ->registerForAutoconfiguration(CommandHandler::class)
+            ->addTag('command_handler')
+        ;
+        $container
+            ->addCompilerPass(new CommandBusCompilerPass())
+        ;
     }
 }

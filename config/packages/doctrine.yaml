@@ -1,22 +1,20 @@
 doctrine:
     dbal:
         # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-
+        driver: 'pdo_pgsql'
+        server_version: '11.3'
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            user_id:
+                class: App\Doctrine\Type\UserIdType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            App:
+            SymfonyLiveWarsaw:
                 is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                type: xml
+                dir: '%kernel.project_dir%/src/App/Doctrine/mapping'
+                prefix: 'SymfonyLiveWarsaw\Domain'
+                alias: SymfonLiveWarsaw
