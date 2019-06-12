@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace spec\SymfonyLiveWarsaw\Application\UseCase;
 
 use SymfonyLiveWarsaw\Application\UseCase\RegisterUser;
+use SymfonyLiveWarsaw\Domain\Email;
 use SymfonyLiveWarsaw\Domain\Users;
 use SymfonyLiveWarsaw\Domain\User;
 use SymfonyLiveWarsaw\Application\UseCase\RegisterUser\UserFactory;
+use SymfonyLiveWarsaw\Application\Exception\UserAlreadyExists;
 use PhpSpec\ObjectBehavior;
 
 /**
@@ -37,5 +39,18 @@ class RegisterUserSpec extends ObjectBehavior
         $this->handle($command);
 
         $users->add($user)->shouldHaveBeenCalled();
+    }
+
+    function it_cannot_register_user_with_same_email(Users $users)
+    {
+        $command = new RegisterUser\Command(
+            'a35c7f52-fdf3-40ed-a69e-2c7f17d174e9',
+            'leszek.prabucki@gmail.com',
+            '$argon2id$v=19$m=1024,t=2,p=2$WXl6Wk5zWWpPY3RvWFloMA$emM94iLGzIMjqDC/uk6UFlRIhXQQ72t1f67L+LZEVQA'
+        );
+
+        $users->has(Email::fromString('leszek.prabucki@gmail.com'))->willReturn(true);
+
+        $this->shouldThrow(UserAlreadyExists::class)->duringHandle($command);
     }
 }
