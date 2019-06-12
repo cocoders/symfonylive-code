@@ -2,4 +2,4 @@ suites:
   app_suite:
     namespace:  App
   symfonylive_suite:
-    namespace:  SymfonyLiveWarsaw\Domain
+    namespace:  SymfonyLiveWarsaw
