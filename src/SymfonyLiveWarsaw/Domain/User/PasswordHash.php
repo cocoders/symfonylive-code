@@ -8,6 +8,11 @@ use InvalidArgumentException;
 
 final class PasswordHash
 {
+    /**
+     * @var string
+     */
+    private $value;
+
     public static function fromString(string $hash): PasswordHash
     {
         $info = password_get_info($hash);
@@ -24,5 +29,10 @@ final class PasswordHash
         $passwordHash->value = $hash;
 
         return $passwordHash;
+    }
+
+    public function toString(): string
+    {
+        return $this->value;
     }
 }
