@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyLiveWarsaw\Application\UseCase;
 
+use SymfonyLiveWarsaw\Application\Exception\UserAlreadyExists;
 use SymfonyLiveWarsaw\Domain\Users;
 
 class RegisterUser
@@ -25,6 +26,10 @@ class RegisterUser
 
     public function handle(RegisterUser\Command $command): void
     {
+        if ($this->users->has($command->email())) {
+            throw UserAlreadyExists::forEmail($command->email());
+        }
+
         $user = $this->userFactory->create($command);
         $this->users->add($user);
     }
