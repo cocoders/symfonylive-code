@@ -7,7 +7,7 @@ namespace SymfonyLiveWarsaw\Application\Exception;
 use DomainException;
 use SymfonyLiveWarsaw\Domain\Email;
 
-class UserAlreadyExists extends DomainException
+final class UserAlreadyExists extends DomainException
 {
     public static function forEmail(Email $email): UserAlreadyExists
     {

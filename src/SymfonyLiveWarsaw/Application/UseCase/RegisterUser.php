@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace SymfonyLiveWarsaw\Application\UseCase;
 
 use SymfonyLiveWarsaw\Application\Exception\UserAlreadyExists;
+use SymfonyLiveWarsaw\Application\Infrastructure\Command;
+use SymfonyLiveWarsaw\Application\Infrastructure\CommandHandler;
 use SymfonyLiveWarsaw\Domain\Users;
 
-class RegisterUser
+class RegisterUser implements CommandHandler
 {
     /**
      * @var Users
@@ -24,7 +26,10 @@ class RegisterUser
         $this->userFactory = $userFactory;
     }
 
-    public function handle(RegisterUser\Command $command): void
+    /**
+     * @param RegisterUser\Command $command
+     */
+    public function handle(Command $command): void
     {
         if ($this->users->has($command->email())) {
             throw UserAlreadyExists::forEmail($command->email());

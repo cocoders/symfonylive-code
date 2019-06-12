@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace SymfonyLiveWarsaw\Application\UseCase\RegisterUser;
 
+use SymfonyLiveWarsaw\Application\Infrastructure\Command as CommandInterface;
 use SymfonyLiveWarsaw\Domain\Email;
 use SymfonyLiveWarsaw\Domain\User;
 use SymfonyLiveWarsaw\Domain\User\Fullname;
 use SymfonyLiveWarsaw\Domain\User\PasswordHash;
 
-final class Command
+final class Command implements CommandInterface
 {
     /**
      * @var string
