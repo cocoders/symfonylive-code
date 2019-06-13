@@ -3,7 +3,7 @@ security:
     encoders:
         SymfonyLiveWarsaw\Domain\User:
             algorithm: sodium
-    providers:
+    poviders:
         in_memory: { memory: ~ }
     firewalls:
         dev:

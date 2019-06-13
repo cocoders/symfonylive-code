@@ -24,7 +24,8 @@
     "symfony/form": "^4.3",
     "symfony/security-bundle": "^4.3",
     "symfony/translation": "^4.3",
-    "symfony/validator": "^4.3"
+    "symfony/validator": "^4.3",
+    "symfony/messenger": "^4.3"
   },
   "conflict": {
       "symfony/symfony": "*"
